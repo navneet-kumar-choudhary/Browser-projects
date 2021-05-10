@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html {
+        /* 1 rem -> 16 px */
+        font-size: 63.5%;
+      }
+      bode {
+        margin: 0px;
+      }
+      .box {
+        border: 1px solid;
+      }
+      .one {
+        background-color: lightgreen;
+        height: 200px;
+        width: 200px; /* default width is full upto screen*/
+        /* overflow: auto; */
+      }
+      /* relative unit */
+      .two {
+        background-color: lightblue;
+        height: 10rem;
+        width: 10rem;
+      }
+      /* view height and view width */
+      /* 100 vw -> browser screen width */
+      /* 100 vh -> browser screen height */
+
+      .three {
+        background-color: lightcoral;
+        height: 10vh;
+        width: 10vw;
+      }
+      .parent {
+        background-color: rgb(82, 77, 77);
+        height: 20rem;
+        width: 20rem;
+      }
+      /* percentage is relative to parent */
+      .child {
+        height: 50%;
+        width: 20%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- div height -> defaults 
+        content available-> = contents
+        if not =0;
+        unless given manaully heights
+       -->
+
+    <div class="box one"></div>
+    <div class="box two"></div>
+    <div class="box three"></div>
+    <div class="parent">
+      <div class="child"></div>
+    </div>
+  </body>
+</html>

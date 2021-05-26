@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0px;
+      }
+      .colors {
+        width: 80vw;
+        height: 5rem;
+        border: 2px solid;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+      }
+      .color,
+      .download {
+        height: 70%;
+        width: 20%;
+      }
+      .red {
+        background-color: red;
+      }
+      .lightgreen {
+        background-color: lightgreen;
+      }
+      .lightblue {
+        background-color: lightblue;
+      }
+      .download {
+        border: 3px solid;
+        padding-top: 1rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- canvas tuts -->
+    <!-- <h1>Canvas Board</h1> -->
+    <!-- tablet -->
+    <div class="colors">
+      <div class="color red"></div>
+      <div class="color lightgreen"></div>
+      <div class="color lightblue"></div>
+      <div class="download">Download</div>
+    </div>
+    <img src="https://picsum.photos/200" style="display: none;" alt="" crossorigin="anonymous">
+
+    <canvas class="board"></canvas>
+    <script>
+      let board = document.querySelector(".board");
+      //tool -> digitizer pen
+      let tool = board.getContext("2d");
+      board.height = window.innerHeight;
+      board.width = window.innerWidth;
+      //default color -> black
+      //x, y, width, height
+      //color
+      // fill -> area fill
+      //   tool.fillStyle = "ligthgreen";
+      //   tool.fillRect(0, 0, window.innerWidth / 2, window.innerHeight / 2);
+      //   //stroke -> ouline draw
+      //   tool.strokeStyle = "yellow";
+      //   tool.lineWidth = 10;
+      //   tool.beginPath();
+      //   tool.moveTo(100, 100);
+      //   tool.lineTo(200, 50);
+      //   tool.lineTo(200, 200);
+      //   tool.moveTo(50, 280);
+      //   tool.lineTo(200, 280);
+      //   tool.stroke();
+      //   // new path ->
+      //   tool.beginPath();
+      //   tool.moveTo(200, 280);
+      //   tool.strokeStyle = "red";
+      //   tool.lineWidth = 5;
+      //   tool.lineTo(200, 200);
+      //   tool.moveTo(250, 150);
+      //   tool.lineTo(200, 280);
+      //   tool.stroke();
+      // tool.strokeRect(10,10,innerWidth/2,innerHeight/2);
+      // tool.fillStyle="red";
+      // tool.fillRect(40,40,window.innerWidth/2,innerHeight/2);
+      let isDown = false;
+      tool.strokeStyle = "red";
+      tool.lineWidth = 10;
+      let colors = document.querySelectorAll(".color");
+      let colorContainer = document.querySelector(".colors");
+      console.log(colors);
+      for (let i = 0; i < colors.length; i++) {
+        colors[i].addEventListener("click", function () {
+          let newColor = colors[i].classList[1];
+          console.log(newColor);
+          tool.strokeStyle = newColor;
+          //   if (newColor === "red") {
+          //     tool.strokeStyle = newColor;
+          //   }
+        });
+      }
+      board.addEventListener("mousedown", function (e) {
+        console.log(e);
+        tool.beginPath();
+        tool.moveTo(e.clientX, getY(e.clientY));
+        isDown = true;
+      });
+      board.addEventListener("mousemove", function (e) {
+        if (isDown) {
+          tool.lineTo(e.clientX, getY(e.clientY));
+          tool.stroke();
+        }
+      });
+      //event
+      board.addEventListener("mouseup", function (e) {
+        isDown = false;
+      });
+      function getY(originalY) {
+        let obj = colorContainer.getBoundingClientRect();
+        let height = obj.height;
+        return originalY - obj.height;
+      }
+    </script>
+    <script>
+      let download = document.querySelector(".download");
+      download.addEventListener("click", function () {
+        let url = board.toDataURL();
+        let a = document.createElement("a");
+        a.download = "file.png";
+        a.href = url;
+        a.click();
+        a.remove();
+      });
+    </script>
+     <script>
+        let myImage = document.querySelector("img");
+        myImage.addEventListener("load", function () {
+            // img , srcImg -> sX,srcY,s.width,s.height, canvas.x,canvas.y, 
+            // actual height ,actual with of the rendered image
+            tool.drawImage(myImage, 0,0);
+        })
+    </script>
+  </body>
+</html>
